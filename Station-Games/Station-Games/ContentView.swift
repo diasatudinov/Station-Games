@@ -9,19 +9,18 @@ import SwiftUI
 
 
 
-
-
 struct ContentView: View {
     var body: some View {
-        ZStack {
-            
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.blue)
+        VStack {
             
         }
-        .aspectRatio(1, contentMode: .fit)
     }
+
+    
 }
+
+
+
 #Preview {
     ContentView()
 }

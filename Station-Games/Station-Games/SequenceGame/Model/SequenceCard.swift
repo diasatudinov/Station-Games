@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct SequenceCard: Identifiable, Equatable {
+    let id = UUID()
+    let symbol: String
+    var isFaceUp = false
+}

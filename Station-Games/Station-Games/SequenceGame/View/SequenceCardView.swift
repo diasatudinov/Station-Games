@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct SequenceCardView: View {
+    let card: SequenceCard
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            if card.isFaceUp {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.white)
+                    .shadow(radius: 5)
+                Text(card.symbol)
+                    .font(.largeTitle)
+            } else {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.blue)
+            }
+        }
+        .aspectRatio(1, contentMode: .fit)
     }
 }
 
 #Preview {
-    SequenceCardView()
+    SequenceCardView(card: SequenceCard(symbol: "🔥"))
 }
