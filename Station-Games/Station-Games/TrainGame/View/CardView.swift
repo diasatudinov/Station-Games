@@ -8,11 +8,28 @@
 import SwiftUI
 
 struct CardView: View {
+    let card: Card
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            if card.isFaceUp || card.isMatched {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.white)
+                    .shadow(radius: 5)
+                Text(card.type)
+                    .font(.largeTitle)
+            } else {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.blue)
+                Text(card.type)
+                    .font(.largeTitle)
+                    .opacity(0.0)
+            }
+        }
+        .aspectRatio(1, contentMode: .fit)
     }
 }
 
 #Preview {
-    CardView()
+    CardView(card: Card(type: "🔥"))
 }

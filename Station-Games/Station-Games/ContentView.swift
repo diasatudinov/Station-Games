@@ -7,18 +7,21 @@
 
 import SwiftUI
 
+
+
+
+
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack {
+            
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.blue)
+            
         }
-        .padding()
+        .aspectRatio(1, contentMode: .fit)
     }
 }
-
 #Preview {
     ContentView()
 }
