@@ -13,23 +13,20 @@ struct CardView: View {
     var body: some View {
         ZStack {
             if card.isFaceUp || card.isMatched {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .shadow(radius: 5)
-                Text(card.type)
-                    .font(.largeTitle)
+                Image(card.type)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 60)
             } else {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.blue)
-                Text(card.type)
-                    .font(.largeTitle)
-                    .opacity(0.0)
+                Image(.cardBack)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 60)
             }
         }
-        .aspectRatio(1, contentMode: .fit)
     }
 }
 
 #Preview {
-    CardView(card: Card(type: "🔥"))
+    CardView(card: Card(type: "cardFace1"))
 }
