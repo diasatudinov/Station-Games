@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State private var showGame = false
+    @State private var showTrainGame = false
     @State private var showCatch = false
     @State private var showLearnStars = false
     @State private var showAchievements = false
@@ -65,7 +65,7 @@ struct MenuView: View {
                             VStack(spacing: 25) {
                                 
                                 Button {
-                                    showQuiz = true
+                                    showTrainGame = true
                                 } label: {
                                     TextBg(height: 95, text: "Train Game", textSize: 24)
                                 }
@@ -137,7 +137,7 @@ struct MenuView: View {
                                 HStack(spacing: 5) {
                                     Spacer()
                                     Button {
-                                        showQuiz = true
+                                        showTrainGame = true
                                     } label: {
                                         TextBg(height: 95, text: "Train Game", textSize: 24)
                                     }
@@ -202,8 +202,8 @@ struct MenuView: View {
             //                    MusicPlayer.shared.stopBackgroundMusic()
             //                }
             //            }
-            .fullScreenCover(isPresented: $showGame) {
-                ContentView()
+            .fullScreenCover(isPresented: $showTrainGame) {
+                TrainGameView()
             }
             .fullScreenCover(isPresented: $showQuiz) {
                 ContentView()
