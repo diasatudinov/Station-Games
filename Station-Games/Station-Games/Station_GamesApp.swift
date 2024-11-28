@@ -11,7 +11,7 @@ import SwiftUI
 struct Station_GamesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MenuView()
         }
     }
 }
