@@ -8,11 +8,23 @@
 import SwiftUI
 
 struct TextBg: View {
+    var height: CGFloat
+    var text: String
+    var textSize: CGFloat
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Image(.textBg)
+                .resizable()
+                .scaledToFit()
+                .frame(height: height)
+            Text(text)
+                .font(.custom(Fonts.abhayaLibre.rawValue, size: textSize))
+                .foregroundStyle(.yellow)
+                .textCase(.uppercase)
+        }
     }
 }
 
 #Preview {
-    TextBg()
+    TextBg(height: 100, text: "Loading...", textSize: 32)
 }
