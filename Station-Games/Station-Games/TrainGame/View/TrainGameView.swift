@@ -121,7 +121,7 @@ struct TrainGameView: View {
             
             if gameEnded {
                 
-                MenuShield(menuType: .win, headerText: "You Win!", firstBtnText: "Next Level", secondBtnText: "Menu", menuShow: $gameEnded, firstBtnPress: { setupGame() }, secondBtnPress: { presentationMode.wrappedValue.dismiss() })
+                MenuShield(menuType: .win, headerText: "You Win!", firstBtnText: "Next Level", secondBtnText: "Menu", menuShow: $gameEnded, firstBtnPress: { setupGame() }, secondBtnPress: { presentationMode.wrappedValue.dismiss() }, addPoints: "+5")
             
             }
             

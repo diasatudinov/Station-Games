@@ -13,14 +13,15 @@ struct SequenceCardView: View {
     var body: some View {
         ZStack {
             if card.isFaceUp {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.white)
-                    .shadow(radius: 5)
-                Text(card.symbol)
-                    .font(.largeTitle)
+                Image(card.symbol)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 228)
             } else {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.blue)
+                Image(.card2Back)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 228)
             }
         }
         .aspectRatio(1, contentMode: .fit)
@@ -28,5 +29,5 @@ struct SequenceCardView: View {
 }
 
 #Preview {
-    SequenceCardView(card: SequenceCard(symbol: "🔥"))
+    SequenceCardView(card: SequenceCard(symbol: "card2Face1"))
 }

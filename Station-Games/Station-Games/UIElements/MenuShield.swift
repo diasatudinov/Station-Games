@@ -21,6 +21,7 @@ struct MenuShield: View {
     
     var firstBtnPress: () -> ()
     var secondBtnPress: () -> ()
+    var addPoints: String?
     var body: some View {
         ZStack {
             Rectangle()
@@ -65,11 +66,12 @@ struct MenuShield: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(height: 43)
-                                    
-                                    Text("+5")
-                                        .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
-                                        .foregroundStyle(.yellow)
-                                        .textCase(.uppercase)
+                                    if let addPoints = addPoints {
+                                        Text(addPoints)
+                                            .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                                            .foregroundStyle(.yellow)
+                                            .textCase(.uppercase)
+                                    }
                                 }.frame(height: 55)
                                 
                             }.padding(.bottom, 20)

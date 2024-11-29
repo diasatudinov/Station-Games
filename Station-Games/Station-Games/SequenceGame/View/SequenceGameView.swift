@@ -8,44 +8,139 @@
 import SwiftUI
 
 struct SequenceGameView: View {
+    @StateObject var user = User.shared
+    @Environment(\.presentationMode) var presentationMode
+
     @State private var cards: [SequenceCard] = []
     @State private var sequence: [Int] = []
     @State private var currentGuessIndex = 0
     @State private var isPlayerTurn = false
     @State private var message: String = "Memorize the sequence!"
-    @State private var showRestart = false
+    @State private var gameLose: Bool = false
+    @State private var pauseShow: Bool = false
+    @State private var gameEnded: Bool = false
     
-    private let allSymbols = ["😀", "😂", "😍", "🥳", "😎"]
+    private let allSymbols = ["card2Face1", "card2Face2", "card2Face3", "card2Face4", "card2Face5"]
     private let sequenceLength = 5
     
+    @State private var counter: Int = 0
     var body: some View {
-        VStack {
-            Text(message)
-                .font(.title2)
-                .padding()
-            
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 5)) {
-                ForEach(cards) { card in
-                    SequenceCardView(card: card)
-                        .onTapGesture {
-                            if isPlayerTurn {
-                                handleCardTap(card)
-                            }
+        ZStack {
+            if counter < 2 {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        
+                        TextBg(height: 130, text: "Level \(user.levelGame)", textSize: 40)
+                        
+
+                        Spacer()
+                    }
+                    TextBg(height: 98, text: "Start", textSize: 24)
+                    Spacer()
+                }
+            }
+            if counter > 1 {
+                
+                VStack {
+                    HStack {
+                        Button {
+                            pauseShow = true
+                        } label: {
+                            ZStack {
+                                Image(.coinBg)
+                                    .resizable()
+                                    .scaledToFit()
+                                
+                                Image(.pause)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 20)
+                                
+                            }.frame(height: 55)
+                            
                         }
-                        .opacity(card.isFaceUp ? 1.0 : 0.7)
+                        Spacer()
+                        
+                        HStack(spacing: 5){
+                            Spacer()
+                            ZStack {
+                                Image(.coinBg)
+                                    .resizable()
+                                    .scaledToFit()
+                                
+                                Image(.coin)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 30)
+                                
+                            }.frame(height: 55)
+                            
+                            ZStack {
+                                Image(.pointsBg)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 43)
+                                
+                                Text("\(user.coins)")
+                                    .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                                    .foregroundStyle(.yellow)
+                                    .textCase(.uppercase)
+                            }.frame(height: 55)
+                            
+                        }
+                        
+                    
+                }.padding([.top,.horizontal], 20)
+
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 5)) {
+                        ForEach(cards) { card in
+                            SequenceCardView(card: card)
+                                .onTapGesture {
+                                    if isPlayerTurn {
+                                        handleCardTap(card)
+                                    }
+                                }
+                            
+                        }
+                    }
+                    .padding()
+                   
                 }
-            }
-            .padding()
-            
-            if showRestart {
-                Button("Restart") {
+                .onAppear {
+                    
                     setupGame()
+                    
                 }
-                .padding()
-                .buttonStyle(.borderedProminent)
             }
+            
+            if pauseShow {
+                MenuShield(menuType: .pause, headerText: "Pause", firstBtnText: "Resume", secondBtnText: "Menu", menuShow: $pauseShow, firstBtnPress: { pauseShow = false }, secondBtnPress: { presentationMode.wrappedValue.dismiss() })
+            }
+            
+            if gameEnded {
+                
+                MenuShield(menuType: .win, headerText: "You Win!", firstBtnText: "Next Level", secondBtnText: "Menu", menuShow: $gameEnded, firstBtnPress: { setupGame() }, secondBtnPress: { presentationMode.wrappedValue.dismiss() }, addPoints: "+1")
+            
+            }
+            
+            if gameLose {
+                MenuShield(menuType: .lose, headerText: "You Lose!", firstBtnText: "Retry", secondBtnText: "Menu", menuShow: $gameLose, firstBtnPress: { setupGame() }, secondBtnPress: { presentationMode.wrappedValue.dismiss() })
+            }
+            
         }
-        .onAppear(perform: setupGame)
+        .onAppear {
+            startTimer()
+        }
+        .background(
+            Image(.background)
+                .resizable()
+                .edgesIgnoringSafeArea(.all)
+                .scaledToFill()
+            
+        )
+        
     }
     
     private func setupGame() {
@@ -55,7 +150,8 @@ struct SequenceGameView: View {
         currentGuessIndex = 0
         isPlayerTurn = false
         message = "Memorize the sequence!"
-        showRestart = false
+        gameLose = false
+        gameEnded = false
         
         // Генерация карт и последовательности
         let randomSymbols = Array(allSymbols.shuffled().prefix(10))
@@ -63,7 +159,19 @@ struct SequenceGameView: View {
         sequence = Array(0..<cards.count).shuffled().prefix(sequenceLength).map { $0 }
         
         // Открытие последовательности карт
-        showSequence()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            showSequence()
+        }
+    }
+    
+    private func startTimer() {
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            if counter < 4 {
+                withAnimation {
+                    counter += 1
+                }
+            }
+        }
     }
     
     private func showSequence() {
@@ -95,15 +203,17 @@ struct SequenceGameView: View {
             
             if currentGuessIndex == sequence.count {
                 // Игрок завершил последовательность
+                gameEnded = true
+                user.updateUserCoins(for: 1)
+                user.updateUserLevelGame2()
                 message = "You won! Great memory!"
-                showRestart = true
                 isPlayerTurn = false
             }
         } else {
             // Неправильная карта
             message = "Incorrect! Try again!"
-            showRestart = true
             isPlayerTurn = false
+            gameLose = true
         }
     }
 }
