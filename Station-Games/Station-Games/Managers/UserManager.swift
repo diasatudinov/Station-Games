@@ -30,6 +30,11 @@ class User: ObservableObject {
         storedCoins = self.coins
     }
     
+    func minusUserCoins(for coins: Int) {
+        self.coins -= coins
+        storedCoins = self.coins
+    }
+    
     func updateUserLevel() {
         self.level += 1
         storedLevel = self.level

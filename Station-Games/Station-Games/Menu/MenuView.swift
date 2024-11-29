@@ -20,6 +20,7 @@ struct MenuView: View {
     //@StateObject var achievementsVM = AchievementsViewModel()
     //    @StateObject var leaderboardVM = LeaderboardViewModel()
     //  @StateObject var settingsVM = SettingsModel()
+    @StateObject var collectionVM = CollectionViewModel()
     
     var body: some View {
         GeometryReader { geometry in
@@ -209,7 +210,7 @@ struct MenuView: View {
                 SequenceGameView()
             }
             .fullScreenCover(isPresented: $showGetCard) {
-                ContentView()
+                GetCardView(collectionVM: collectionVM)
             }
             .fullScreenCover(isPresented: $showCollections) {
                 ContentView()

@@ -111,7 +111,6 @@ struct TrainGameView: View {
                 }
                 .onAppear {
                     setupGame()
-                    print(cards)
                 }
             }
             
