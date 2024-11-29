@@ -10,11 +10,11 @@ import SwiftUI
 struct MenuView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var showTrainGame = false
-    @State private var showCatch = false
-    @State private var showLearnStars = false
-    @State private var showAchievements = false
+    @State private var showSequenceGame = false
+    @State private var showGetCard = false
+    @State private var showCollections = false
     @State private var showSettings = false
-    @State private var showQuiz = false
+    
     
     @StateObject var user = User.shared
     //@StateObject var achievementsVM = AchievementsViewModel()
@@ -71,25 +71,25 @@ struct MenuView: View {
                                 }
                                 
                                 Button {
-                                    showQuiz = true
+                                    showSequenceGame = true
                                 } label: {
                                     TextBg(height: 95, text: "Sequence Game", textSize: 24)
                                 }
                                 
                                 Button {
-                                    showQuiz = true
+                                    showGetCard = true
                                 } label: {
                                     TextBg(height: 95, text: "Get Card", textSize: 24)
                                 }
                                 
                                 Button {
-                                    showQuiz = true
+                                    showCollections = true
                                 } label: {
                                     TextBg(height: 95, text: "Collection", textSize: 24)
                                 }
                                 
                                 Button {
-                                    showQuiz = true
+                                    showSettings = true
                                 } label: {
                                     TextBg(height: 95, text: "Settings", textSize: 24)
                                 }
@@ -144,7 +144,7 @@ struct MenuView: View {
                                     
                                     
                                     Button {
-                                        showQuiz = true
+                                        showSequenceGame = true
                                     } label: {
                                         TextBg(height: 95, text: "Sequence Game", textSize: 24)
                                     }
@@ -154,13 +154,13 @@ struct MenuView: View {
                                 HStack(spacing: 5) {
                                     Spacer()
                                     Button {
-                                        showQuiz = true
+                                        showGetCard = true
                                     } label: {
                                         TextBg(height: 95, text: "Get Card", textSize: 24)
                                     }
                                     
                                     Button {
-                                        showQuiz = true
+                                        showCollections = true
                                     } label: {
                                         TextBg(height: 95, text: "Collection", textSize: 24)
                                     }
@@ -169,7 +169,7 @@ struct MenuView: View {
                                 HStack {
                                     Spacer()
                                     Button {
-                                        showQuiz = true
+                                        showSettings = true
                                     } label: {
                                         TextBg(height: 95, text: "Settings", textSize: 24)
                                     }
@@ -205,21 +205,19 @@ struct MenuView: View {
             .fullScreenCover(isPresented: $showTrainGame) {
                 TrainGameView()
             }
-            .fullScreenCover(isPresented: $showQuiz) {
+            .fullScreenCover(isPresented: $showSequenceGame) {
+                SequenceGameView()
+            }
+            .fullScreenCover(isPresented: $showGetCard) {
                 ContentView()
             }
-            .fullScreenCover(isPresented: $showAchievements) {
+            .fullScreenCover(isPresented: $showCollections) {
                 ContentView()
             }
             .fullScreenCover(isPresented: $showSettings) {
                 ContentView()
             }
-            .fullScreenCover(isPresented: $showCatch) {
-                ContentView()
-            }
-            .fullScreenCover(isPresented: $showLearnStars) {
-                ContentView()
-            }
+            
         }
     }
 }
