@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct SequenceGameView: View {
     @StateObject var user = User.shared
     @Environment(\.presentationMode) var presentationMode
-
+    @State private var audioPlayer: AVAudioPlayer?
+    @ObservedObject var settingsVM: SettingsModel
+    
     @State private var cards: [SequenceCard] = []
     @State private var sequence: [Int] = []
     @State private var currentGuessIndex = 0
@@ -100,6 +103,10 @@ struct SequenceGameView: View {
                                 .onTapGesture {
                                     if isPlayerTurn {
                                         handleCardTap(card)
+                                        if settingsVM.soundEnabled {
+                                            playSound(named: "flipcard")
+                                            
+                                        }
                                     }
                                 }
                             
@@ -216,8 +223,20 @@ struct SequenceGameView: View {
             gameLose = true
         }
     }
+    
+    func playSound(named soundName: String) {
+        if let url = Bundle.main.url(forResource: soundName, withExtension: "mp3") {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.play()
+            } catch {
+                print("Error playing sound: \(error.localizedDescription)")
+            }
+        }
+    }
+
 }
 
 #Preview {
-    SequenceGameView()
+    SequenceGameView(settingsVM: SettingsModel())
 }

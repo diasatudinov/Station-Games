@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct TrainGameView: View {
     @StateObject var user = User.shared
+    @State private var audioPlayer: AVAudioPlayer?
+    @ObservedObject var settingsVM: SettingsModel
+    
     @State private var cards: [Card] = []
     @State private var selectedCards: [Card] = []
     @State private var message: String = "Find all matching cards!"
@@ -101,6 +105,9 @@ struct TrainGameView: View {
                             CardView(card: card)
                                 .onTapGesture {
                                     flipCard(card)
+                                    if settingsVM.soundEnabled {
+                                        playSound(named: "flipcard")
+                                    }
                                 }
                                 .opacity(card.isMatched ? 0.5 : 1.0)
                         }
@@ -237,8 +244,19 @@ struct TrainGameView: View {
         }
         selectedCards.removeAll()
     }
+    
+    func playSound(named soundName: String) {
+        if let url = Bundle.main.url(forResource: soundName, withExtension: "mp3") {
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.play()
+            } catch {
+                print("Error playing sound: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 #Preview {
-    TrainGameView()
+    TrainGameView(settingsVM: SettingsModel())
 }

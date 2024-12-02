@@ -191,23 +191,30 @@ struct MenuView: View {
                     .scaledToFill()
                 
             )
-            //            .onAppear {
-            //                if settingsVM.musicEnabled {
-            //                    MusicPlayer.shared.playBackgroundMusic()
-            //                }
-            //            }
-            //            .onChange(of: settingsVM.musicEnabled) { enabled in
-            //                if enabled {
-            //                    MusicPlayer.shared.playBackgroundMusic()
-            //                } else {
-            //                    MusicPlayer.shared.stopBackgroundMusic()
-            //                }
-            //            }
+            .background(
+                Image(.background)
+                    .resizable()
+                    .edgesIgnoringSafeArea(.all)
+                    .scaledToFill()
+                
+            )
+            .onAppear {
+                if settingsVM.musicEnabled {
+                    MusicPlayer.shared.playBackgroundMusic()
+                }
+            }
+            .onChange(of: settingsVM.musicEnabled) { enabled in
+                if enabled {
+                    MusicPlayer.shared.playBackgroundMusic()
+                } else {
+                    MusicPlayer.shared.stopBackgroundMusic()
+                }
+            }
             .fullScreenCover(isPresented: $showTrainGame) {
-                TrainGameView()
+                TrainGameView(settingsVM: settingsVM)
             }
             .fullScreenCover(isPresented: $showSequenceGame) {
-                SequenceGameView()
+                SequenceGameView(settingsVM: settingsVM)
             }
             .fullScreenCover(isPresented: $showGetCard) {
                 GetCardView(collectionVM: collectionVM)
