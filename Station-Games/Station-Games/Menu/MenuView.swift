@@ -19,7 +19,7 @@ struct MenuView: View {
     @StateObject var user = User.shared
     //@StateObject var achievementsVM = AchievementsViewModel()
     //    @StateObject var leaderboardVM = LeaderboardViewModel()
-    //  @StateObject var settingsVM = SettingsModel()
+      @StateObject var settingsVM = SettingsModel()
     @StateObject var collectionVM = CollectionViewModel()
     
     var body: some View {
@@ -213,10 +213,10 @@ struct MenuView: View {
                 GetCardView(collectionVM: collectionVM)
             }
             .fullScreenCover(isPresented: $showCollections) {
-                ContentView()
+                CollectionView(collectionVM: collectionVM)
             }
             .fullScreenCover(isPresented: $showSettings) {
-                ContentView()
+                SettingsView(settings: settingsVM)
             }
             
         }
