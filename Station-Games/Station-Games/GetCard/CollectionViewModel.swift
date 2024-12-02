@@ -9,14 +9,14 @@ import Foundation
 
 class CollectionViewModel: ObservableObject {
     @Published var achievements: [Achievement] = [
-        Achievement(title: "Precision Machinist", icon: "getCard1"),
-        Achievement(title: "Chief Dispatcher", icon: "getCard2"),
-        Achievement(title: "Traffic light ace", icon: "getCard3"),
-        Achievement(title: "Train of the future", icon: "getCard4"),
-        Achievement(title: "Turbo locomotive", icon: "getCard5"),
-        Achievement(title: "Stationmaster", icon: "getCard6"),
-        Achievement(title: "Tunnel Master", icon: "getCard7"),
-        Achievement(title: "Way Magnate", icon: "getCard8")
+        Achievement(title: "Precision Machinist", icon: "getCard1", disabledIcon: "getCardOff1"),
+        Achievement(title: "Chief Dispatcher", icon: "getCard2", disabledIcon: "getCardOff2"),
+        Achievement(title: "Traffic light ace", icon: "getCard3", disabledIcon: "getCardOff3"),
+        Achievement(title: "Train of the future", icon: "getCard4", disabledIcon: "getCardOff4"),
+        Achievement(title: "Turbo locomotive", icon: "getCard5", disabledIcon: "getCardOff5"),
+        Achievement(title: "Stationmaster", icon: "getCard6", disabledIcon: "getCardOff6"),
+        Achievement(title: "Tunnel Master", icon: "getCard7", disabledIcon: "getCardOff7"),
+        Achievement(title: "Way Magnate", icon: "getCard8", disabledIcon: "getCardOff8")
         
         
     ] {
@@ -47,14 +47,14 @@ class CollectionViewModel: ObservableObject {
             return decoded
         }
         return [
-            Achievement(title: "Precision Machinist", icon: "getCard1"),
-            Achievement(title: "Chief Dispatcher", icon: "getCard2"),
-            Achievement(title: "Traffic light ace", icon: "getCard3"),
-            Achievement(title: "Train of the future", icon: "getCard4"),
-            Achievement(title: "Turbo locomotive", icon: "getCard5"),
-            Achievement(title: "Stationmaster", icon: "getCard6"),
-            Achievement(title: "Tunnel Master", icon: "getCard7"),
-            Achievement(title: "Way Magnate", icon: "getCard8")
+            Achievement(title: "Precision Machinist", icon: "getCard1", disabledIcon: "getCardOff1"),
+            Achievement(title: "Chief Dispatcher", icon: "getCard2", disabledIcon: "getCardOff2"),
+            Achievement(title: "Traffic light ace", icon: "getCard3", disabledIcon: "getCardOff3"),
+            Achievement(title: "Train of the future", icon: "getCard4", disabledIcon: "getCardOff4"),
+            Achievement(title: "Turbo locomotive", icon: "getCard5", disabledIcon: "getCardOff5"),
+            Achievement(title: "Stationmaster", icon: "getCard6", disabledIcon: "getCardOff6"),
+            Achievement(title: "Tunnel Master", icon: "getCard7", disabledIcon: "getCardOff7"),
+            Achievement(title: "Way Magnate", icon: "getCard8", disabledIcon: "getCardOff8")
             
             
         ]

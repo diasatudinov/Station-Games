@@ -154,7 +154,6 @@ struct GetCardView: View {
                         
                         Button {
                             selectedCardIndex = nil
-                            print(collectionVM.achievements)
                         } label: {
                             
                             TextBg(height: 98, text: "Back", textSize: 32)

@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct Achievement: Identifiable, Codable {
+struct Achievement: Identifiable, Codable, Equatable {
     let id = UUID()
     let title: String
     let icon: String
+    let disabledIcon: String
     var isOpened: Bool = false
 }

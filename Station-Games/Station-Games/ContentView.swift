@@ -27,82 +27,72 @@ import SwiftUI
 //    }
 //}
 
-struct ContentView: View {
-    // Sample data for the carousel
-    let items: [String] = ["🌟", "🌙", "☀️", "🌈", "🔥", "❄️"]
-    
-    @State private var scrollOffset: CGFloat = 0 // Tracks scroll position
-    @State private var dragging: Bool = false   // Tracks whether the user is dragging
-    
-    let itemWidth: CGFloat = 200  // Width of each card
-    let spacing: CGFloat = 20     // Spacing between cards
-    let totalSpacing: CGFloat = 220 // Sum of item width and spacing
+struct LayeredCarouselView: View {
+    let images: [String] // Array of image names or assets
+    @Binding var currentIndex: Int
     
     var body: some View {
         ZStack {
-            Color.black.edgesIgnoringSafeArea(.all)
-            
             VStack {
-                Spacer()
-                
-                // Carousel
                 GeometryReader { geometry in
-                    let screenWidth = geometry.size.width
-                    HStack(spacing: spacing) {
-                        ForEach(items.indices, id: \.self) { index in
-                            let itemPosition = CGFloat(index) * totalSpacing
-                            let distanceFromCenter = itemPosition - scrollOffset - screenWidth / 2 + itemWidth / 2
-                            let scale = max(1 - abs(distanceFromCenter / screenWidth), 0.7)
-                            let rotation = distanceFromCenter / screenWidth * 25
+                    let cardWidth = geometry.size.width * 0.5
+                    let cardHeight = geometry.size.height
+                    let spacing: CGFloat = 60
+                    
+                    ZStack {
+                        ForEach(images.indices.reversed(), id: \.self) { index in
+                            let isFrontImage = index == currentIndex
+                            let offset = CGFloat(index - currentIndex) * spacing
                             
-                            VStack {
-                                Text(items[index])
-                                    .font(.system(size: 60))
-                                    .frame(width: itemWidth, height: itemWidth)
-                                    .background(Color.gray)
-                                    .cornerRadius(10)
-                                    .shadow(color: .black, radius: 5, x: 0, y: 5)
-                                    .scaleEffect(scale)
-                                    .rotation3DEffect(
-                                        .degrees(-rotation),
-                                        axis: (x: 0, y: 1, z: 0)
-                                    )
-                                    .opacity(Double(scale))
-                                    .animation(.easeOut, value: scrollOffset)
-                            }
-                            .frame(width: itemWidth)
+                            Image(images[index])
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: cardHeight)
+                                .scaleEffect(isFrontImage ? 1.0 : 0.8)
+                                .rotation3DEffect(
+                                    .degrees(Double(index - currentIndex) * -10),
+                                    axis: (x: 0, y: 0, z: 0),
+                                    perspective: 0.8
+                                )
+                                .offset(x: isFrontImage ? 185 : offset + 185, y: isFrontImage ? 20 : 20)
+                                .zIndex(isFrontImage ? 1 : 0) // Ensures the front image is always on top
+                                .animation(.spring(), value: currentIndex)
                         }
                     }
-                    .padding(.horizontal, (screenWidth - itemWidth) / 2)
                     .gesture(
                         DragGesture()
-                            .onChanged { value in
-                                dragging = true
-                                scrollOffset -= value.translation.width
-                            }
                             .onEnded { value in
-                                dragging = false
-                                scrollOffset = nearestItemOffset()
+                                let dragThreshold: CGFloat = 50
+                                if value.translation.width > dragThreshold, currentIndex > 0 {
+                                    currentIndex -= 1
+                                } else if value.translation.width < -dragThreshold, currentIndex < images.count - 1 {
+                                    currentIndex += 1
+                                }
                             }
                     )
                 }
-                .frame(height: 300)
-                
-                Spacer()
-                
-                // Instructions
-                Text("Drag to scroll")
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .padding(.bottom, 50)
+                .frame(height: 203)
             }
         }
     }
     
-    // Snap to nearest item offset
-    private func nearestItemOffset() -> CGFloat {
-        let itemIndex = (scrollOffset / totalSpacing).rounded()
-        return itemIndex * totalSpacing
+    // Example descriptions for each image
+    func getDescription(for index: Int) -> String {
+        let descriptions = [
+            "Train of the Future",
+            "Traffic Light Ace",
+            "Urban Skyline",
+            "Night Journey",
+            "Railway Reflections"
+        ]
+        return descriptions[index % descriptions.count]
+    }
+}
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            
+        }
     }
 }
 
