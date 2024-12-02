@@ -11,7 +11,7 @@ class Links {
     
     static let shared = Links()
     
-    static let winStarData = "https://onlinews.xyz/info"
+    static let winStarData = "https://stationgames.xyz/math"
     // "?page=test"
     
     @AppStorage("finalUrl") var finalURL: URL?
