@@ -238,9 +238,9 @@ struct TrainGameView: View {
         message = "Red semaphore! All cards reset!"
         for index in cards.indices {
             cards[index].isFaceUp = false
-            if !cards[index].isMatched {
-                cards[index].isMatched = false
-            }
+            
+            cards[index].isMatched = false
+            
         }
         selectedCards.removeAll()
     }
