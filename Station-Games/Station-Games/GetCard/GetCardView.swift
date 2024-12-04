@@ -37,9 +37,9 @@ struct GetCardView: View {
                             Image(.arrowLeft)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 20)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 40:20)
                             
-                        }.frame(height: 55)
+                        }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                         
                     }
                     Spacer()
@@ -54,21 +54,21 @@ struct GetCardView: View {
                             Image(.coin)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 30)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 60:30)
                             
-                        }.frame(height: 55)
+                        }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                         
                         ZStack {
                             Image(.pointsBg)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 43)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 80:43)
                             
                             Text("\(user.coins)")
-                                .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                                .font(.custom(Fonts.abhayaLibre.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                                 .foregroundStyle(.yellow)
                                 .textCase(.uppercase)
-                        }.frame(height: 55)
+                        }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                         
                     }
                     
@@ -88,7 +88,7 @@ struct GetCardView: View {
                                     Image(.getCardBack)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(height: 141)
+                                        .frame(height: DeviceInfo.shared.deviceType == .pad ? 250 : 141)
                                         .opacity(index == 12 && selectedCardIndex != nil ? 0 : 1)
                                         .id(index)
                                 }
@@ -145,7 +145,7 @@ struct GetCardView: View {
                         Image(collectionVM.achievements[index].icon)
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 200)
+                            .frame(height: DeviceInfo.shared.deviceType == .pad ? 350:200)
                         
                         Text(collectionVM.achievements[index].title)
                             .font(.custom(Fonts.abhayaLibre.rawValue, size: 32))

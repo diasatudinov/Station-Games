@@ -42,20 +42,20 @@ struct MenuView: View {
                                     Image(.coin)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(height: 30)
+                                        .frame(height: DeviceInfo.shared.deviceType == .pad ?60:30)
                                     
-                                }.frame(height: 55)
+                                }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100 : 55)
                                 
                                 ZStack {
                                     Image(.pointsBg)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(height: 43)
+                                        .frame(height: DeviceInfo.shared.deviceType == .pad ? 80 : 43)
                                     Text("\(user.coins)")
-                                        .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                                        .font(.custom(Fonts.abhayaLibre.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40 :20))
                                         .foregroundStyle(.yellow)
                                         .textCase(.uppercase)
-                                }.frame(height: 55)
+                                }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100 : 55)
                                 
                             }
                             Spacer()
@@ -68,31 +68,31 @@ struct MenuView: View {
                                 Button {
                                     showTrainGame = true
                                 } label: {
-                                    TextBg(height: 95, text: "Train Game", textSize: 24)
+                                    TextBg(height: DeviceInfo.shared.deviceType == .pad ? 150 : 95, text: "Train Game", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
                                 }
                                 
                                 Button {
                                     showSequenceGame = true
                                 } label: {
-                                    TextBg(height: 95, text: "Sequence Game", textSize: 24)
+                                    TextBg(height: DeviceInfo.shared.deviceType == .pad ? 150 : 95, text: "Sequence Game", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
                                 }
                                 
                                 Button {
                                     showGetCard = true
                                 } label: {
-                                    TextBg(height: 95, text: "Get Card", textSize: 24)
+                                    TextBg(height: DeviceInfo.shared.deviceType == .pad ? 150 : 95, text: "Get Card", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
                                 }
                                 
                                 Button {
                                     showCollections = true
                                 } label: {
-                                    TextBg(height: 95, text: "Collection", textSize: 24)
+                                    TextBg(height: DeviceInfo.shared.deviceType == .pad ? 150 : 95, text: "Collection", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
                                 }
                                 
                                 Button {
                                     showSettings = true
                                 } label: {
-                                    TextBg(height: 95, text: "Settings", textSize: 24)
+                                    TextBg(height: DeviceInfo.shared.deviceType == .pad ? 150 : 95, text: "Settings", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
                                 }
                             }
                             Spacer()
@@ -112,20 +112,20 @@ struct MenuView: View {
                                     Image(.coin)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(height: 30)
+                                        .frame(height: DeviceInfo.shared.deviceType == .pad ? 60 : 30)
                                     
-                                }.frame(height: 55)
+                                }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100 :55)
                                 
                                 ZStack {
                                     Image(.pointsBg)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(height: 43)
+                                        .frame(height: DeviceInfo.shared.deviceType == .pad ? 80:43)
                                     Text("\(user.coins)")
-                                        .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                                        .font(.custom(Fonts.abhayaLibre.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                                         .foregroundStyle(.yellow)
                                         .textCase(.uppercase)
-                                }.frame(height: 55)
+                                }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                                 
                             }.padding([.top, .trailing], 20)
                             Spacer()
@@ -140,14 +140,14 @@ struct MenuView: View {
                                     Button {
                                         showTrainGame = true
                                     } label: {
-                                        TextBg(height: 95, text: "Train Game", textSize: 24)
+                                        TextBg(height: DeviceInfo.shared.deviceType == .pad ? 150 : 95, text: "Train Game", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
                                     }
                                     
                                     
                                     Button {
                                         showSequenceGame = true
                                     } label: {
-                                        TextBg(height: 95, text: "Sequence Game", textSize: 24)
+                                        TextBg(height: DeviceInfo.shared.deviceType == .pad ? 150 : 95, text: "Sequence Game", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
                                     }
                                     Spacer()
                                 }
@@ -157,13 +157,13 @@ struct MenuView: View {
                                     Button {
                                         showGetCard = true
                                     } label: {
-                                        TextBg(height: 95, text: "Get Card", textSize: 24)
+                                        TextBg(height: DeviceInfo.shared.deviceType == .pad ? 150 : 95, text: "Get Card", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
                                     }
                                     
                                     Button {
                                         showCollections = true
                                     } label: {
-                                        TextBg(height: 95, text: "Collection", textSize: 24)
+                                        TextBg(height: DeviceInfo.shared.deviceType == .pad ? 150 : 95, text: "Collection", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
                                     }
                                     Spacer()
                                 }
@@ -172,12 +172,15 @@ struct MenuView: View {
                                     Button {
                                         showSettings = true
                                     } label: {
-                                        TextBg(height: 95, text: "Settings", textSize: 24)
+                                        TextBg(height: DeviceInfo.shared.deviceType == .pad ? 150 : 95, text: "Settings", textSize: DeviceInfo.shared.deviceType == .pad ? 40 : 24)
                                     }
                                     Spacer()
                                 }
-                                
+                                if DeviceInfo.shared.deviceType == .pad {
+                                    Spacer()
+                                }
                             }
+                            
                         }
                         
                         

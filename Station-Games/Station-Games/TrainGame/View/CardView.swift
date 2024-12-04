@@ -16,12 +16,12 @@ struct CardView: View {
                 Image(card.type)
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 60)
+                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 120:60)
             } else {
                 Image(.cardBack)
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 60)
+                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 120:60)
             }
         }
     }

@@ -31,9 +31,9 @@ struct CollectionView: View {
                             Image(.arrowLeft)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 20)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 40:20)
                             
-                        }.frame(height: 55)
+                        }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                         
                     }
                     Spacer()
@@ -48,21 +48,21 @@ struct CollectionView: View {
                             Image(.coin)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 30)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 60:30)
                             
-                        }.frame(height: 55)
+                        }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                         
                         ZStack {
                             Image(.pointsBg)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 43)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 80:43)
                             
                             Text("\(user.coins)")
-                                .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                                .font(.custom(Fonts.abhayaLibre.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                                 .foregroundStyle(.yellow)
                                 .textCase(.uppercase)
-                        }.frame(height: 55)
+                        }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                         
                     }
                     
@@ -72,6 +72,9 @@ struct CollectionView: View {
                 
                 ZStack {
                     VStack {
+                        if DeviceInfo.shared.deviceType == .pad {
+                            Spacer()
+                        }
                         LayeredCarouselView(images: images, currentIndex: $currentIndex)
                         Spacer()
                     }
@@ -187,4 +190,66 @@ struct CollectionView: View {
 
 #Preview {
     CollectionView(collectionVM: CollectionViewModel())
+}
+
+struct LayeredCarouselView: View {
+    let images: [String] // Array of image names or assets
+    @Binding var currentIndex: Int
+    
+    var body: some View {
+        ZStack {
+            VStack {
+                GeometryReader { geometry in
+                    let cardWidth = geometry.size.width * 0.5
+                    let cardHeight = DeviceInfo.shared.deviceType == .pad ? geometry.size.height * 1.5 : geometry.size.height
+                    let spacing: CGFloat = 60
+                    
+                    ZStack {
+                        ForEach(images.indices.reversed(), id: \.self) { index in
+                            let isFrontImage = index == currentIndex
+                            let offset = CGFloat(index - currentIndex) * spacing
+                            
+                            Image(images[index])
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: cardHeight)
+                                .scaleEffect(isFrontImage ? 1.0 : 0.8)
+                                .rotation3DEffect(
+                                    .degrees(Double(index - currentIndex) * -10),
+                                    axis: (x: 0, y: 0, z: 0),
+                                    perspective: 0.8
+                                )
+                                .offset(x: isFrontImage ? DeviceInfo.shared.deviceType == .pad ? 350:185 :  DeviceInfo.shared.deviceType == .pad ? offset + 350 : offset + 185, y: isFrontImage ? 20 : 20)
+                                .zIndex(isFrontImage ? 1 : 0) // Ensures the front image is always on top
+                                .animation(.spring(), value: currentIndex)
+                        }
+                    }
+                    .gesture(
+                        DragGesture()
+                            .onEnded { value in
+                                let dragThreshold: CGFloat = 50
+                                if value.translation.width > dragThreshold, currentIndex > 0 {
+                                    currentIndex -= 1
+                                } else if value.translation.width < -dragThreshold, currentIndex < images.count - 1 {
+                                    currentIndex += 1
+                                }
+                            }
+                    )
+                }
+                .frame(height: 203)
+            }
+        }
+    }
+    
+    // Example descriptions for each image
+    func getDescription(for index: Int) -> String {
+        let descriptions = [
+            "Train of the Future",
+            "Traffic Light Ace",
+            "Urban Skyline",
+            "Night Journey",
+            "Railway Reflections"
+        ]
+        return descriptions[index % descriptions.count]
+    }
 }

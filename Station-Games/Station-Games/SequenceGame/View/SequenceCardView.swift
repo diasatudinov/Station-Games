@@ -16,12 +16,12 @@ struct SequenceCardView: View {
                 Image(card.symbol)
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 228)
+                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 400:228)
             } else {
                 Image(.card2Back)
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 228)
+                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 400:228)
             }
         }
         .aspectRatio(1, contentMode: .fit)

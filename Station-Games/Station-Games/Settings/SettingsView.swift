@@ -27,9 +27,9 @@ struct SettingsView: View {
                             Image(.arrowLeft)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 20)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 40:20)
                             
-                        }.frame(height: 55)
+                        }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                         
                     }
                     Spacer()
@@ -44,21 +44,21 @@ struct SettingsView: View {
                             Image(.coin)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 30)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 60:30)
                             
-                        }.frame(height: 55)
+                        }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                         
                         ZStack {
                             Image(.pointsBg)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 43)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 80:43)
                             
                             Text("\(user.coins)")
-                                .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                                .font(.custom(Fonts.abhayaLibre.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                                 .foregroundStyle(.yellow)
                                 .textCase(.uppercase)
-                        }.frame(height: 55)
+                        }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                         
                     }
                     
@@ -73,9 +73,9 @@ struct SettingsView: View {
                     Image(.menuHeader)
                         .resizable()
                         .scaledToFit()
-                        .frame(height: 50)
+                        .frame(height: DeviceInfo.shared.deviceType == .pad ? 75:50)
                     Text("Settings")
-                        .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                        .font(.custom(Fonts.abhayaLibre.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 35:20))
                         .foregroundStyle(.yellow)
                         .textCase(.uppercase)
                 }.offset(y: 20)
@@ -88,14 +88,14 @@ struct SettingsView: View {
                     
                     VStack(spacing: 0) {
                         Text("music")
-                            .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                            .font(.custom(Fonts.abhayaLibre.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                             .foregroundStyle(.yellow)
                             .textCase(.uppercase)
                         HStack {
                             Image(.musicIcon)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 65)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 120:65)
                             Button {
                                 settings.musicEnabled.toggle()
                             } label: {
@@ -103,26 +103,26 @@ struct SettingsView: View {
                                     Image(.on)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(height: 40)
+                                        .frame(height: DeviceInfo.shared.deviceType == .pad ? 65:40)
                                 } else {
                                     Image(.off)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(height: 40)
+                                        .frame(height: DeviceInfo.shared.deviceType == .pad ? 65:40)
                                 }
                             }
                             
                         }
                         
                         Text("Effects")
-                            .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                            .font(.custom(Fonts.abhayaLibre.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                             .foregroundStyle(.yellow)
                             .textCase(.uppercase)
                         HStack {
                             Image(.effectsIcon)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 65)
+                                .frame(height: DeviceInfo.shared.deviceType == .pad ? 120:65)
                             
                             Button {
                                 settings.soundEnabled.toggle()
@@ -131,19 +131,19 @@ struct SettingsView: View {
                                     Image(.on)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(height: 40)
+                                        .frame(height: DeviceInfo.shared.deviceType == .pad ? 65:40)
                                 } else {
                                     Image(.off)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(height: 40)
+                                        .frame(height: DeviceInfo.shared.deviceType == .pad ? 65:40)
                                 }
                             }
                         }.padding(.bottom, 50)
                        
                     }
                     
-                }.scaledToFit().frame(height: 312)
+                }.scaledToFit().frame(height: DeviceInfo.shared.deviceType == .pad ? 500:312)
             }
         }.background(
             Image(.background)

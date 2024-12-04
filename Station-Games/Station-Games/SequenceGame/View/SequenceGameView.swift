@@ -59,9 +59,9 @@ struct SequenceGameView: View {
                                 Image(.pause)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 20)
+                                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 40:20)
                                 
-                            }.frame(height: 55)
+                            }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                             
                         }
                         Spacer()
@@ -76,27 +76,29 @@ struct SequenceGameView: View {
                                 Image(.coin)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 30)
+                                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 60:30)
                                 
-                            }.frame(height: 55)
+                            }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                             
                             ZStack {
                                 Image(.pointsBg)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(height: 43)
+                                    .frame(height: DeviceInfo.shared.deviceType == .pad ? 80:43)
                                 
                                 Text("\(user.coins)")
-                                    .font(.custom(Fonts.abhayaLibre.rawValue, size: 20))
+                                    .font(.custom(Fonts.abhayaLibre.rawValue, size: DeviceInfo.shared.deviceType == .pad ? 40:20))
                                     .foregroundStyle(.yellow)
                                     .textCase(.uppercase)
-                            }.frame(height: 55)
+                            }.frame(height: DeviceInfo.shared.deviceType == .pad ? 100:55)
                             
                         }
                         
                     
                 }.padding([.top,.horizontal], 20)
-
+                    if DeviceInfo.shared.deviceType == .pad {
+                        Spacer()
+                    }
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 5)) {
                         ForEach(cards) { card in
                             SequenceCardView(card: card)
@@ -113,7 +115,9 @@ struct SequenceGameView: View {
                         }
                     }
                     .padding()
-                   
+                    if DeviceInfo.shared.deviceType == .pad {
+                        Spacer()
+                    }
                 }
                 .onAppear {
                     
