@@ -10,7 +10,7 @@ import Foundation
 class Resolver: NSObject, URLSessionTaskDelegate {
     func resolveIt(from originalURL: URL, completion: @escaping (URL?) -> Void) {
         var request = URLRequest(url: originalURL)
-        request.setValue("Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148", forHTTPHeaderField: "User-Agent")
+        request.setValue("CFNetwork", forHTTPHeaderField: "User-Agent")
 
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
         let task = session.dataTask(with: request) { _, response, error in
@@ -45,15 +45,9 @@ class Resolver: NSObject, URLSessionTaskDelegate {
             
             return await withCheckedContinuation { continuation in
                 handler.resolveIt(from: url) { finalURL in
-                    print(finalURL)
                     if let finalURL {
-                        if Links.shared.finalURL == nil && ((finalURL.host?.contains("google")) != true) {
-                            Links.shared.finalURL = finalURL
-                        }
-                        
                         continuation.resume(returning: finalURL.host?.contains("google") ?? true)
                     } else {
-                        Links.shared.finalURL = finalURL
                         continuation.resume(returning: false)
                     }
                     
